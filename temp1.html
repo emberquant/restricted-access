@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emberquant - Accounting Agentic Toolkit</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #000000;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fffff0;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            height: 100vh;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .content-wrapper {
+            max-width: 800px;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .logo {
+            margin-bottom: 1.5rem;
+            max-width: 180px;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            letter-spacing: 3px;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            color: #333333;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-transform: lowercase;
+            background-color: #000;
+            color: #fff;
+            display: inline-block;
+            padding: 4px 18px;
+        }
+        
+        .restricted-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .restricted-icon {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .restricted-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .restricted-text p {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .decorative-element {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            opacity: 0.03;
+            background: #000;
+            z-index: 1;
+        }
+        
+        .top-left {
+            top: -150px;
+            left: -150px;
+        }
+        
+        .top-right {
+            top: -150px;
+            right: -150px;
+        }
+        
+        .bottom-left {
+            bottom: -150px;
+            left: -150px;
+        }
+        
+        .bottom-right {
+            bottom: -150px;
+            right: -150px;
+        }
+        
+        .email {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .email:hover {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .email:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s;
+        }
+        
+        .email:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        .cta {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 3rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+        
+        .cta:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cta:hover:before {
+            left: 100%;
+        }
+        
+        .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cta:hover:before {
+            left: 100%;
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .toast-message.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .restricted-section {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .content-wrapper {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles-js"></div>
+    <div class="container">
+        <div class="content-wrapper">
+            <img src="EQ.png" alt="Emberquant Logo" class="logo">
+            <!-- <h1>EMBERQUANT</h1>
+            <div class="tagline">an accounting agentic toolkit</div> -->
+            
+            <div class="restricted-section">
+                <div class="restricted-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <div class="restricted-text">
+                    <h3>Members Only Zone</h3>
+                    <p>Our accountants are too busy counting beans to let everyone in.</p>
+                    <p>Email <a href="mailto:request@emberquant.com" class="email">request@emberquant.com</a> for VIP access.</p>
+                </div>
+            </div>
+            
+            <a href="https://drive.google.com/file/d/1BFsDipCtvSD9bG7KJ0ojfTeMY2VvK-Qg/view?usp=sharing" class="cta" id="learn-more" target="_blank">Learn More</a>
+        </div>
+        
+        <div class="decorative-element top-left"></div>
+        <div class="decorative-element top-right"></div>
+        <div class="decorative-element bottom-left"></div>
+        <div class="decorative-element bottom-right"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles.js
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 40,
+                        "density": {
+                            "enable": true,
+                            "value_area": 1500
+                        }
+                    },
+                    "color": {
+                        "value": "#000000"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.1,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 5,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#000000",
+                        "opacity": 0.1,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 0.5
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 3
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Add subtle animation to elements
+            const logo = document.querySelector('.logo');
+            const container = document.querySelector('.container');
+            
+            // Add a humorous Easter egg
+            const restrictedSection = document.querySelector('.restricted-section');
+            let clickCount = 0;
+            
+            restrictedSection.addEventListener('click', function() {
+                clickCount++;
+                
+                if (clickCount === 5) {
+                    const messages = [
+                        "Still locked. Our accountants are very stubborn.",
+                        "Nice try! But our spreadsheets are Fort Knox level secure.",
+                        "You're persistent! Send that email though, seriously.",
+                        "Clicking won't help, but we admire your determination!"
+                    ];
+                    
+                    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                    
+                    const toast = document.createElement('div');
+                    toast.className = 'toast-message';
+                    toast.textContent = randomMessage;
+                    document.body.appendChild(toast);
+                    
+                    setTimeout(() => {
+                        toast.classList.add('show');
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        setTimeout(() => {
+                            document.body.removeChild(toast);
+                        }, 500);
+                    }, 3000);
+                    
+                    clickCount = 0;
+                }
+            });
+            
+            // CTA button click event
+            document.getElementById('learn-more').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Add a nice ripple effect
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    window.location.href = 'https://drive.google.com/file/d/1BFsDipCtvSD9bG7KJ0ojfTeMY2VvK-Qg/view?usp=sharing';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
